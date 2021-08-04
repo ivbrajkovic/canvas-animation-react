@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 import styles from "./styles.module.css";
 
 const DoubleSlider = ({
@@ -10,21 +8,14 @@ const DoubleSlider = ({
   current = 50,
   onChange,
 }) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current.innerHTML = current;
-  }, [current]);
   const handleChange = ({ target: { value } }) => {
-    ref.current.innerHTML = value;
     onChange && onChange(value);
   };
   return (
-    <div>
+    <div className={styles.root}>
       <div className={styles.values}>
-        {label ? label : null}
-        <div>
-          <span ref={ref} />
-        </div>
+        <div>{label}</div>
+        <div>{current}</div>
       </div>
       <div className={styles["slider-container"]}>
         <div className={styles["slider-track"]} />
@@ -36,6 +27,7 @@ const DoubleSlider = ({
           max={max}
           value={current}
           onChange={handleChange}
+          className={styles.input}
         />
       </div>
     </div>

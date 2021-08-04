@@ -1,4 +1,4 @@
-const componentsInfo = [
+const components = [
   {
     name: "2D Particles text",
     controls: {
@@ -9,14 +9,17 @@ const componentsInfo = [
       text: "Epti",
       color: { connection: "rgb(23,184,144)" },
       connections: {
+        showConnections: true,
         sliderMin: 0,
         sliderMax: 100,
-        minDistanceThreshold: 20,
-        maxDistanceThreshold: 40,
+        distanceThresholdMin: 20,
+        distanceThresholdMax: 40,
       },
       mouse: {
-        minRadius: 0,
-        maxRadius: 300,
+        sliderMin: 0,
+        sliderMax: 800,
+        radiusMin: 0,
+        radiusMax: 300,
       },
     },
   },
@@ -29,14 +32,17 @@ const componentsInfo = [
     config: {
       color: { connection: "rgb(23,184,144)" },
       connections: {
+        showConnections: true,
         sliderMin: 0,
-        sliderMax: 400,
-        minDistanceThreshold: 20,
-        maxDistanceThreshold: 120,
+        sliderMax: 200,
+        distanceThresholdMin: 20,
+        distanceThresholdMax: 120,
       },
       mouse: {
-        minRadius: 0,
-        maxRadius: 250,
+        sliderMin: 0,
+        sliderMax: 800,
+        radiusMin: 0,
+        radiusMax: 250,
       },
     },
   },
@@ -50,6 +56,12 @@ const componentsInfo = [
   },
 ];
 
-export const getComponentName = (index) => componentsInfo[index].name;
-export const getComponentConfig = (index) => componentsInfo[index].config;
-export const getComponentControls = (index) => componentsInfo[index].controls;
+export const store = {
+  showFPS: false,
+  showLines: false,
+  components: components,
+};
+
+export const getComponentName = (index) => store.components[index].name;
+export const getComponentConfig = (index) => store.components[index].config;
+export const getComponentControls = (index) => store.components[index].controls;

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import styles from "./styles.module.css";
 
@@ -10,33 +10,27 @@ const DoubleSlider = ({
   currentMax = 120,
   onChange,
 }) => {
-  const ref = useRef({ min: null, max: null });
-  useEffect(() => {
-    ref.current.min.innerHTML = currentMin;
-    ref.current.max.innerHTML = currentMax;
-  }, [currentMin, currentMax]);
+  const stateRef = useRef({
+    min: currentMin,
+    max: currentMax,
+  });
   const handleChange = ({ target: { name, value } }) => {
-    ref.current[name].innerHTML = value;
-    onChange &&
-      onChange({
-        min: +ref.current.min.innerHTML,
-        max: +ref.current.max.innerHTML,
-      });
+    stateRef.current[name] = +value;
+    onChange && onChange(stateRef.current);
   };
   return (
-    <div>
+    <div className={styles.root}>
       <div className={styles.values}>
-        {label ? label : null}
+        <div>{label}</div>
         <div>
-          <span ref={(el) => (ref.current.min = el)} />
+          <span>{currentMin}</span>
           {" - "}
-          <span ref={(el) => (ref.current.max = el)} />
+          <span>{currentMax}</span>
         </div>
       </div>
       <div className={styles["slider-container"]}>
         <div className={styles["slider-track"]} />
         <input
-          className={styles.slider}
           name="min"
           type="range"
           step="10"
@@ -44,6 +38,7 @@ const DoubleSlider = ({
           max={max}
           value={currentMin}
           onChange={handleChange}
+          className={styles.input}
         />
         <input
           name="max"
@@ -53,6 +48,7 @@ const DoubleSlider = ({
           max={max}
           value={currentMax}
           onChange={handleChange}
+          className={styles.input}
         />
       </div>
     </div>

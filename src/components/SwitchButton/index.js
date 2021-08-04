@@ -13,7 +13,7 @@ const SwitchButton = ({ label, id, onChange, checked }) => {
         checked={checked}
         onChange={handelChange}
       />
-      <label for={id} className={styles.checkboxLabel} />
+      <label htmlFor={id} className={styles.checkboxLabel} />
     </div>
   );
 };

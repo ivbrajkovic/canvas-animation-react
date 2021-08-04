@@ -12,7 +12,10 @@
 
 .button {
   width: calc(100% / 3);
-  text-align: center;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #111;
   font-size: 14px;
   font-weight: 600;

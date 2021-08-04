@@ -3,15 +3,15 @@ export class Mouse {
     x = null,
     y = null,
     radius = 120,
-    minRadius = 0,
-    maxRadius = 180,
+    radiusMin = 0,
+    radiusMax = 180,
   }) {
     this._x = x;
     this._y = y;
     this.dpRatio = window.devicePixelRatio;
     this.radius = radius * this.dpRatio;
-    this._minRadius = minRadius * this.dpRatio;
-    this._maxRadius = maxRadius * this.dpRatio;
+    this._radiusMin = radiusMin * this.dpRatio;
+    this._radiusMax = radiusMax * this.dpRatio;
   }
 
   get X() {
@@ -31,24 +31,24 @@ export class Mouse {
   }
 
   increaseRadius(value) {
-    if (this.radius < this._maxRadius) this.radius += value;
+    if (this.radius < this._radiusMax) this.radius += value;
   }
 
   decreaseRadius(value) {
-    if (this.radius > this._minRadius) this.radius -= value;
+    if (this.radius > this._radiusMin) this.radius -= value;
   }
 
   /**
    * @param {number} value
    */
-  set minRadius(value) {
-    this._maxRadius = value * this.dpRatio;
+  set radiusMin(value) {
+    this._radiusMax = value * this.dpRatio;
   }
 
   /**
    * @param {number} value
    */
-  set maxRadius(value) {
-    this._maxRadius = value * this.dpRatio;
+  set radiusMax(value) {
+    this._radiusMax = value * this.dpRatio;
   }
 }

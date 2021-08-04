@@ -1,15 +1,16 @@
-import { Children, memo } from "react";
+import { Children, memo, useState } from "react";
 import { a, useTrail } from "@react-spring/web";
 
-import { getComponentConfig, getComponentControls } from "data/componentInfo";
-
-import DoubleSlider from "components/DoubleSlider";
-import SingleSlider from "components/SingleSlider";
+import { SingleSlider, DoubleSlider } from "components/Slider";
 import SwitchButton from "components/SwitchButton";
 import GroupButton from "components/GroupButton";
 import FadeIn from "components/FadeIn";
 
+import { store } from "data/componentInfo";
+
 import styles from "./styles.module.css";
+
+const GROUP_BUTTONS = ["Text", "Points", "Cubes"];
 
 const Trail = ({ children }) => {
   const items = Children.toArray(children);
@@ -27,87 +28,75 @@ const Trail = ({ children }) => {
 };
 
 const Controls = ({ index, sampleRef, toggleFps, onSampleChange }) => {
-  const { showLines, showSlider, showSpeed } = getComponentControls(index);
+  const [state, setState] = useState(store);
 
-  const config = getComponentConfig(index);
-  const {
-    fpsCallback,
-    camera: { speed: cameraSpeed } = {},
-    connections: {
-      sliderMin,
-      sliderMax,
-      minDistanceThreshold,
-      maxDistanceThreshold,
-    } = {},
-    mouse: { minRadius, maxRadius } = {},
-  } = config;
+  const { showLines, showSlider, showSpeed } = state.components[index].controls;
+  const { config } = state.components[index];
+  const { connections = {}, mouse = {}, camera = {} } = config;
 
-  const toggleConnections = () => {
-    config.showLines = sampleRef.current.toggleConnections();
+  const toggleConnections = (value) => {
+    config.connections.showConnections = value;
+    sampleRef.current.showConnections(value);
+    setState({ ...store });
   };
 
   const changeDistanceThresholdChange = ({ min, max }) => {
-    config.connections.minDistanceThreshold = min;
-    config.connections.maxDistanceThreshold = max;
+    config.connections.distanceThresholdMin = min;
+    config.connections.distanceThresholdMax = max;
     sampleRef.current.changeDistanceThreshold(min, max);
+    setState({ ...store });
   };
 
   const changeMouseRadius = ({ min, max }) => {
-    config.mouse.minRadius = min;
-    config.mouse.maxRadius = max;
+    config.mouse.radiusMin = min;
+    config.mouse.radiusMax = max;
     sampleRef.current.changeMouseRadius(min, max);
+    setState({ ...store });
   };
 
   const changeCameraSpeed = (speed) => {
     config.camera.speed = speed;
     sampleRef.current.changeCameraSpeed(speed);
+    setState({ ...store });
   };
 
   return (
     <FadeIn delay={200} className={styles["controls-container"]}>
       <Trail>
-        <GroupButton
-          data={["Text", "Points", "Cubes"]}
-          onChange={onSampleChange}
-        />
-        <SwitchButton
-          id="input-fps"
-          label="Show FPS"
-          checked={!!fpsCallback}
-          onChange={toggleFps}
-        />
+        <GroupButton data={GROUP_BUTTONS} onChange={onSampleChange} />
+        <SwitchButton id="input-fps" label="Show FPS" onChange={toggleFps} />
         {showLines && (
           <SwitchButton
             id="input-connections"
             label="Show lines"
-            checked={true}
+            checked={connections.showConnections}
             onChange={toggleConnections}
           />
         )}
         {showSpeed && (
           <SingleSlider
-            label="Speed: "
-            current={cameraSpeed}
+            label="Speed"
+            current={camera.speed}
             onChange={changeCameraSpeed}
           />
         )}
         {showSlider && (
           <DoubleSlider
-            label="Lines: "
-            min={sliderMin}
-            max={sliderMax}
-            currentMin={minDistanceThreshold}
-            currentMax={maxDistanceThreshold}
+            label="Lines"
+            min={connections.sliderMin}
+            max={connections.sliderMax}
+            currentMin={connections.distanceThresholdMin}
+            currentMax={connections.distanceThresholdMax}
             onChange={changeDistanceThresholdChange}
           />
         )}
         {showSlider && (
           <DoubleSlider
-            label="Radius: "
-            min={0}
-            max={800}
-            currentMin={minRadius}
-            currentMax={maxRadius}
+            label="Radius"
+            min={mouse.sliderMin}
+            max={mouse.sliderMax}
+            currentMin={mouse.radiusMin}
+            currentMax={mouse.radiusMax}
             onChange={changeMouseRadius}
           />
         )}

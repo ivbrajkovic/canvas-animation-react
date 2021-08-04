@@ -17,8 +17,8 @@ const DEFAULT_CONNECTIONS = {
   showConnections: true,
   lineWidth: 2,
   distanceThreshold: 0,
-  minDistanceThreshold: 20,
-  maxDistanceThreshold: 40,
+  distanceThresholdMin: 20,
+  distanceThresholdMax: 40,
 };
 
 export class Particles {
@@ -48,8 +48,8 @@ export class Particles {
 
     this.dpRatio = window.devicePixelRatio;
 
-    this.connections.minDistanceThreshold *= this.dpRatio;
-    this.connections.maxDistanceThreshold *= this.dpRatio;
+    this.connections.distanceThresholdMin *= this.dpRatio;
+    this.connections.distanceThresholdMax *= this.dpRatio;
 
     this.screenWidth = window.screen.width * this.dpRatio;
     this.screenHeight = window.screen.height * this.dpRatio;
@@ -71,8 +71,8 @@ export class Particles {
     this.connections.distanceThreshold = rangeMap(
       [0, this.screenWidth],
       [
-        this.connections.minDistanceThreshold,
-        this.connections.maxDistanceThreshold,
+        this.connections.distanceThresholdMin,
+        this.connections.distanceThresholdMax,
       ]
     )(this.canvas.width);
     // console.log({ distanceThreshold: this.connections.distanceThreshold });
@@ -161,17 +161,19 @@ export class Particles {
   toggleFPS = (cb) =>
     !!(this.fps.callback = this.fps.callback ? undefined : cb);
 
-  toggleConnections = () =>
-    (this.connections.showConnections = !this.connections.showConnections);
+  showConnections = (value) => {
+    this.connections.showConnections = value;
+    this.initConnections();
+  };
 
   changeDistanceThreshold(min, max) {
-    this.connections.minDistanceThreshold = min * this.dpRatio;
-    this.connections.maxDistanceThreshold = max * this.dpRatio;
+    this.connections.distanceThresholdMin = min * this.dpRatio;
+    this.connections.distanceThresholdMax = max * this.dpRatio;
     this.initConnections();
   }
 
   changeMouseRadius(min, max) {
-    [this.mouse.minRadius, this.mouse.maxRadius] = [min, max];
+    [this.mouse.radiusMin, this.mouse.radiusMax] = [min, max];
   }
 
   addEventListeners() {

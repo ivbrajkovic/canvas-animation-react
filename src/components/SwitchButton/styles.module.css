@@ -4,16 +4,14 @@
   --switch-checked-background-color: var(--primary-color);
 
   --switch-width: 50px;
-  --switch-height: calc(var(--switch-width) * 0.5);
+  --switch-height: 26px;
   --switch-inner-padding: 3px;
   --switch-circle-size: calc(
     var(--switch-height) - calc(var(--switch-inner-padding) * 2)
   );
 
-  display: grid;
-  grid-template-columns: minmax(85px, 1fr) auto;
-  gap: 10px;
-  /* background-color: #ff0000; */
+  display: flex;
+  justify-content: space-between;
 }
 
 .label {
