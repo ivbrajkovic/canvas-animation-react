@@ -1,0 +1,27 @@
+.button-container {
+  width: 180px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.button-container > div:not(:first-child) {
+  border-left: 1px solid black;
+}
+
+.button {
+  width: calc(100% / 3);
+  text-align: center;
+  color: #111;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--control-foreground);
+  cursor: pointer;
+  transition: all 500ms ease-out;
+}
+
+.button-active {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}

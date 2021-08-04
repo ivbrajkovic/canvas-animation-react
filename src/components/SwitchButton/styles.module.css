@@ -1,0 +1,70 @@
+.root {
+  --switch-circle-color: #111;
+  --switch-background-color: var(--control-foreground);
+  --switch-checked-background-color: var(--primary-color);
+
+  --switch-width: 50px;
+  --switch-height: calc(var(--switch-width) * 0.5);
+  --switch-inner-padding: 3px;
+  --switch-circle-size: calc(
+    var(--switch-height) - calc(var(--switch-inner-padding) * 2)
+  );
+
+  display: grid;
+  grid-template-columns: minmax(85px, 1fr) auto;
+  gap: 10px;
+  /* background-color: #ff0000; */
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.input {
+  margin: 0;
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.checkboxLabel {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--switch-background-color);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.checkboxLabel:after {
+  content: "";
+  position: absolute;
+  top: var(--switch-inner-padding);
+  left: var(--switch-inner-padding);
+  width: var(--switch-circle-size);
+  height: var(--switch-circle-size);
+  background: var(--switch-circle-color);
+  border-radius: 100%;
+  /* border-radius: var(--switch-circle-size); */
+  transition: width 0.3s ease,
+    transform 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+
+.input:checked + .checkboxLabel {
+  background: var(--switch-checked-background-color);
+}
+
+.input:checked + .checkboxLabel:after {
+  transform: translateX(
+    calc(var(--switch-width) - 100% - var(--switch-inner-padding) * 2)
+  );
+}
+
+.checkboxLabel:active:after {
+  width: 65%;
+}

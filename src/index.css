@@ -1,13 +1,92 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary-text-color: rgba(255, 255, 255);
+  --secondary-text-color: rgb(187, 187, 187);
+  /* --secondary-text-color: rgba(94, 128, 127, 0.87); */
+
+  --primary-color: rgb(23, 184, 144);
+  --primary-shadow-color: rgba(23, 184, 144, 0.2);
+  --primary-shadow-color-soft: rgba(23, 184, 144, 0.4);
+  /* --secondary-shadow-color: rgba(23, 184, 144, 0.2); */
+
+  --body-background: #1a1a1d;
+  /* --control-background: rgba(61, 61, 77, 0.87); */
+  --control-background: rgba(62, 62, 77, 0.8);
+  /* --control-foreground: rgb(62, 68, 70, 1); */
+  --control-foreground: rgb(88, 107, 114);
+
+  /* --control-background: rgba(77, 61, 61, 0.87); */
+  /* --control-background: rgba(0, 0, 0, 0.4); */
+  /* --control-background: #333333f0; */
+  --control-shadow: 0 0 1px rgba(71, 51, 51, 0.2), 0 0 20px rgba(0, 0, 0, 0.4);
+  --control-shadow-primary: 0 20px 120px var(--primary-shadow-color);
+
+  /* --typed-font-size: 3rem;
+  --typed-color-1: var(--primary-text-color);
+  --typed-color-2: var(--primary-color);
+
+  --social-color: var(--secondary-text-color);
+  --social-color-hover: var(--primary-color); */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Libre Franklin", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  font-size: 1rem;
+  letter-spacing: 1px;
+  line-height: 1.6rem;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: var(--primary-text-color);
+  background: var(--body-background);
+
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+}
+
+.item-enter,
+.item-appear {
+  opacity: 0.01;
+}
+
+.item-enter-active,
+.item-appear-active {
+  opacity: 1;
+  transition: 1000ms ease-in;
+}
+
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0.01;
+  transition: opacity 800ms ease-in;
+}
+
+.fps {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 4px 8px;
+  color: #eee;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  background: var(--control-background);
+  box-shadow: var(--control-shadow);
 }
